@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 # Dimensões da janela do jogo
 WINDOW_WIDTH = 900  # Aumenta a largura da janela
@@ -94,6 +95,12 @@ def main():
 
     maze, player_pos = reset_game(width, height)
 
+    start_time = time.time()
+    countdown_duration = 60
+    elapsed_time = 0
+    blinking = False
+    blink_timer = 0
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -118,15 +125,45 @@ def main():
             if maze[new_pos[1]][new_pos[0]] in [0, 2]:
                 player_pos = new_pos
 
+        elapsed_time = int(time.time() - start_time) 
+
+        remaining_time = max(0, countdown_duration - elapsed_time)
+
         window.fill(BLACK)
         draw_maze(maze, width, height)
         draw_player(player_pos)
 
+        if remaining_time <= 10:
+            blink_timer += clock.get_rawtime()
+            if blink_timer >= 50:
+                blinking = not blinking
+                blink_timer = 0
+            if blinking:
+                font = pygame.font.Font(None, 24)
+                time_text = font.render("Tempo restante: {} segundos".format(remaining_time), True, RED)
+            else:
+                font = pygame.font.Font(None, 24)
+                time_text = font.render("Tempo restante: {} segundos".format(remaining_time), True, WHITE)
+        else:
+            font = pygame.font.Font(None, 24)
+            time_text = font.render("Tempo restante: {} segundos".format(remaining_time), True, WHITE)
+
+        time_rect = time_text.get_rect(topleft=(3, 3))
+        window.blit(time_text, time_rect)
+
+        if remaining_time <= 0:
+            display_message("Tempo esgotado! Você perdeu!")
+            pygame.display.flip()
+            pygame.time.wait(3000)
+            maze, player_pos = reset_game(width, height)
+            start_time = time.time()
+
         if maze[player_pos[1]][player_pos[0]] == 2:
-            display_message("Você saiu do labirinto!")
+            display_message("Você escapou do labirinto!")
             pygame.display.flip()
             pygame.time.wait(3000)  # Aguarda 3 segundos
             maze, player_pos = reset_game(width, height)
+            start_time = time.time()
 
         pygame.display.flip()
         clock.tick(15)
