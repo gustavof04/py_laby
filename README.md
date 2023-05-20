@@ -1,6 +1,6 @@
 # Laby com Pygame
 
-Bem-vindo ao Laby, um jogo de labirinto feito com a linguagem Python utilizando a biblioteca Pygame. O objetivo do jogo é escapar do labirinto tendo em mente que ele está repleto de caminhos sem saída. 
+Bem-vindo ao Laby, um jogo de labirinto feito com a linguagem Python utilizando a biblioteca Pygame. O objetivo do jogo é escapar do labirinto antes do tempo acabar. 
 As teclas de movimento do jogador são WASD ou setas (← → ↑ ↓).
 
 ## Tecnologias utilizadas
