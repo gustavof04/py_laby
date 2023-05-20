@@ -13,6 +13,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+GOLD = (255, 223, 0)
 
 # Inicializa o pygame
 pygame.init()
@@ -23,10 +24,10 @@ pygame.display.set_caption("Laby")
 
 clock = pygame.time.Clock()
 
+# Gera um labirinto usando o algoritmo de Prim
 def generate_maze(width, height):
     maze = [[1] * width for _ in range(height)]
 
-    # Gera um labirinto usando o algoritmo de Prim
     stack = [(0, 0)]
     while stack:
         x, y = stack[-1]
@@ -73,13 +74,25 @@ def draw_player(player_pos):
     rect = pygame.Rect((x + 1) * BLOCK_SIZE, (y + 1) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)
     pygame.draw.rect(window, GREEN, rect)
 
+def display_message(msg):
+    font = pygame.font.Font(None, 70)
+    text = font.render(msg, True, GOLD)
+    shadow = font.render(msg, True, (100, 100, 100))
+    text_rect = text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+    shadow_rect = shadow.get_rect(center=(text_rect.centerx + 2, text_rect.centery + 2))
+    window.blit(shadow, shadow_rect)
+    window.blit(text, text_rect)
+
+def reset_game(width, height):
+    maze = generate_maze(width, height)
+    player_pos = (width - 45, height - 44)  # Posição inicial do jogador
+    return maze, player_pos
+
 def main():
     width = (WINDOW_WIDTH - BLOCK_SIZE) // BLOCK_SIZE
     height = (WINDOW_HEIGHT - BLOCK_SIZE) // BLOCK_SIZE
 
-    maze = generate_maze(width, height)
-
-    player_pos = (width - 45, height - 44)  # Posição inicial do jogador
+    maze, player_pos = reset_game(width, height)
 
     while True:
         for event in pygame.event.get():
@@ -110,8 +123,10 @@ def main():
         draw_player(player_pos)
 
         if maze[player_pos[1]][player_pos[0]] == 2:
-            pygame.quit()
-            return
+            display_message("Você saiu do labirinto!")
+            pygame.display.flip()
+            pygame.time.wait(3000)  # Aguarda 3 segundos
+            maze, player_pos = reset_game(width, height)
 
         pygame.display.flip()
         clock.tick(15)
