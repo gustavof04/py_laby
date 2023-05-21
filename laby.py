@@ -1,4 +1,5 @@
 import pygame
+import sys
 import random
 import time
 
@@ -26,6 +27,33 @@ pygame.display.set_caption("Laby")
 
 # Controla o framerate do Laby
 clock = pygame.time.Clock()
+
+def title_screen():
+    title_font = pygame.font.Font(None, 70)
+    instructions_font = pygame.font.Font(None, 40)
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                running = False
+
+        window.fill(BLACK)
+
+        title_text = title_font.render("Laby", True, WHITE)
+        title_rect = title_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 100))
+
+        instructions_text = instructions_font.render("Pressione qualquer tecla para jogar", True, WHITE)
+        instructions_rect = instructions_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+
+        window.blit(title_text, title_rect)
+        window.blit(instructions_text, instructions_rect)
+
+        pygame.display.flip()
+        clock.tick(60)
 
 # Gera labirintos usando o algoritmo de Prim
 def generate_maze(width, height):
@@ -189,4 +217,5 @@ def main():
         clock.tick(15) # Limita a 15 fps
 
 if __name__ == '__main__':
+    title_screen()
     main()
