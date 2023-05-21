@@ -125,19 +125,19 @@ def main():
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             new_pos = (player_pos[0], player_pos[1] - 1)
-            if maze[new_pos[1]][new_pos[0]] in [0, 2]:
+            if maze[new_pos[1]][new_pos[0]] in [0, 2] and new_pos[1] >= 0:
                 player_pos = new_pos
         elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             new_pos = (player_pos[0], player_pos[1] + 1)
-            if maze[new_pos[1]][new_pos[0]] in [0, 2]:
+            if maze[new_pos[1]][new_pos[0]] in [0, 2] and new_pos[1] < height:
                 player_pos = new_pos
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             new_pos = (player_pos[0] - 1, player_pos[1])
-            if maze[new_pos[1]][new_pos[0]] in [0, 2]:
+            if maze[new_pos[1]][new_pos[0]] in [0, 2] and new_pos[0] >= 0:
                 player_pos = new_pos
         elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             new_pos = (player_pos[0] + 1, player_pos[1])
-            if maze[new_pos[1]][new_pos[0]] in [0, 2]:
+            if maze[new_pos[1]][new_pos[0]] in [0, 2] and new_pos[0] < width:
                 player_pos = new_pos
 
         elapsed_time = int(time.time() - start_time) # Tempo total de jogo
