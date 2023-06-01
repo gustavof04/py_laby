@@ -217,5 +217,8 @@ def main():
         clock.tick(15) # Limita a 15 fps
 
 if __name__ == '__main__':
+    pygame.mixer.music.load(".\sounds\menu.mp3")
+    pygame.mixer.music.play(-1)
     title_screen()
+    pygame.mixer.music.stop() 
     main()
