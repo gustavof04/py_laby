@@ -21,20 +21,20 @@ https://www.python.org/ftp/python/3.11.1/python-3.11.1-macos11.pkg
 ## Configurando o ambiente virtual
 * No seu terminal, navegue até a pasta raiz do projeto e execute o seguinte comando para criar um ambiente virtual:
 
-  _python -m venv nome_da_virtualenv_ (exemplo: venv)
+  <code>python -m venv nome_da_virtualenv</code> (exemplo: venv)
 
 * Rode o comando de acordo com seu sistema para ativar seu ambiente virtual:
 
-  _.\nome_da_virtualenv\Scripts\activate_ (Windows)
+  <code>.\nome_da_virtualenv\Scripts\activate</code> (Windows)
 
-  _source nome_da_virtualenv/bin/activate_ (Linux ou macOS)
+  <code>source nome_da_virtualenv/bin/activate</code> (Linux ou macOS)
 
 ## Instalando as dependências
 * Com o ambiente virtual **ativado**, instale as dependências do Laby com o seguinte comando:
 
-  _pip install -r requirements.txt_
+  <code>pip install -r requirements.txt</code>
 
 ## Como executar o Laby?
 * Execute o arquivo principal do jogo conforme abaixo:
 
-  _python laby.py_
+  <code>python laby.py</code>
